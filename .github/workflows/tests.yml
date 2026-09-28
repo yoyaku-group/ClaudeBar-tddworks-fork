@@ -14,7 +14,10 @@ concurrency:
 jobs:
   test:
     name: Unit Tests with Coverage
-    runs-on: [self-hosted, macOS, ARM64, macos-selfhosted]
+    runs-on:
+      group: yoyaku-ci
+      labels: [self-hosted, macOS, ARM64, macos-selfhosted]
+    timeout-minutes: 45
 
     steps:
       - name: Checkout

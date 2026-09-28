@@ -47,10 +47,17 @@ env:
   APP_ID: ${{ vars.APP_ID }}
   BETA_GROUP_ID: ${{ vars.BETA_GROUP_ID }}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   appstore-release:
     name: Build, Upload & (optionally) Submit
-    runs-on: [self-hosted, macOS, ARM64, macos-selfhosted]
+    runs-on:
+      group: yoyaku-ci
+      labels: [self-hosted, macOS, ARM64, macos-selfhosted]
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
