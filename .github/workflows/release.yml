@@ -25,10 +25,17 @@ env:
   APP_NAME: ClaudeBar
   BUNDLE_ID: com.tddworks.claudebar
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   release:
     name: Build & Release
-    runs-on: [self-hosted, macOS, ARM64, macos-selfhosted]
+    runs-on:
+      group: yoyaku-ci
+      labels: [self-hosted, macOS, ARM64, macos-selfhosted]
+    timeout-minutes: 45
 
     steps:
       - name: Checkout

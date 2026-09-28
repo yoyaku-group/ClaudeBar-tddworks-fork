@@ -13,10 +13,17 @@ on:
 env:
   APP_NAME: ClaudeBar
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build YOYAKU ClaudeBar
-    runs-on: [self-hosted, macOS, ARM64, macos-selfhosted]
+    runs-on:
+      group: yoyaku-ci
+      labels: [self-hosted, macOS, ARM64, macos-selfhosted]
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
